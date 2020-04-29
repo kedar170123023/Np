@@ -1,9 +1,9 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from django import forms
-from .models import *
-from django.utils.translation import gettext, gettext_lazy as _
-from .models import Document
+from    django.contrib.auth.forms   import UserCreationForm
+from    django.contrib.auth.models  import User
+from    django                      import forms
+from    .models                     import (CHESS, MTSE, PR, FHS, CC, RANGOTSAV, Profile)
+from    django.utils.translation    import gettext, gettext_lazy as _
+from    .models                     import Document
 
 
 class DocumentForm(forms.ModelForm):
@@ -62,21 +62,30 @@ class SignUpFormProfile(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = [
-            'mother_name',
-            'father_name',
-            'class_study',
-            'post_office',
-            'birth_date',
-            'gender',
-            'Home_number',
-            'landmark',
-            'addess',
-            'contact',
-            'pin',
-            'ditrict',
-            'city',
-        ]
+        fields = '__all__'
+
+
+class UserDetailsForm(forms.ModelForm):
+    class Meta:
+        fields = ('mother_name', 'father_name', 'gender', 'birth_date', 'contact')
+        model = Profile
+
+class EducationForm(forms.ModelForm):
+    class Meta:
+        fields = ('school' , 'class_study')
+        model = Profile
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        fields = ('landmark', 'addess', 'ditrict', 'pin', 'house_number',)
+        model = Profile
+
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ( 'first_name', 'last_name', 'email',)
+
 
 # *************
 # Free hand sketching Form
@@ -84,53 +93,26 @@ class ProfileUpdateForm(forms.ModelForm):
 class FHS_form(forms.ModelForm):
     class Meta:
         model = FHS
-        fields = (
-            'Full_name',
-            'category',
-            'contact',
-            'addess',
-        )
+        fields = '__all__'
 
 # *************
 # Rangotsav Form
 # *************
-class rangotsav_form(forms.ModelForm):
+class RANGOTSAV_form(forms.ModelForm):
     class Meta:
-        model = rangotsav
-        fields = (
-            'category',
-            'Full_name1',
-            'contact_1',
-            'addess1',
-            'Full_name2',
-            'address_2',
-            'contact_2',
-            'Full_name3',
-            'address_3',
-            'contact_3',
-        )
+        model = RANGOTSAV
+        fields = '__all__'
 
-# *************
+# ****************
 # Puzzle Race Form
-# *************
+# ****************
 class PR_form(forms.ModelForm):
     class Meta:
         model = PR
-        fields = (
-            'category',
-            'Full_name1',
-            'class1',
-            'contact_1',
-            'addess1',
-            'Full_name2',
-            'class2',
-            'address_2',
-            'contact_2',
-            'Full_name3',
-            'class3',
-            'address_3',
-            'contact_3',
-         )
+        fields = '__all__'
+        exclude = ('user', 'success', 'userInput')
+
+
 
 # *************
 # MTSE Form
@@ -138,59 +120,20 @@ class PR_form(forms.ModelForm):
 class MTSE_form(forms.ModelForm):
     class Meta:
         model = MTSE
-        fields = (
-            'qpl',
-            'father_name',
-            'mother_name',
-            'st_class',
-            'board',
-            'school',
-            'post_office',
-            'birth_date',
-            'gender',
-            'landmark',
-            'addess',
-            'ditrict',
-            'city',
-            'pin',
-            'Home_number',
-        )
-
-# *************
-# Story and Poem Writing Form
-# *************
-class SPR_form(forms.ModelForm):
-    class Meta:
-        model = SPR
-        fields = (
-            'Full_name',
-            'category',
-            'contact',
-            'addess',
-         )
+        fields = '__all__'
 
 # Career Counselling
-class cc_form(forms.ModelForm):
+class CC_form(forms.ModelForm):
     class Meta:
-        model = cc
-        fields = (
-            'Full_name',
-            'category',
-            'contact',
-            'addess',
-         )
+        model = CC
+        fields = '__all__'
 # *************
 # Chess Competition Form
 # *************
-class chess_form(forms.ModelForm):
+class CHESS_form(forms.ModelForm):
     class Meta:
-        model = chess
-        fields = (
-            'Full_name',
-            'category',
-            'contact',
-            'addess',
-        )
+        model = CHESS
+        fields = '__all__'
 
 
     

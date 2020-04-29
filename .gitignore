@@ -3,7 +3,10 @@
 # Edit at https://www.gitignore.io/?templates=django
 
 ### Django ###
+navprayas/migrations/
+navprayas/Notes/
 secret.py
+.*
 *.log
 *.pot
 *.pyc

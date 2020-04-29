@@ -60,13 +60,13 @@
                                     <a class="text-danger" style="padding:1mm;" href={% url 'login' %}>Login</a>
                                     <a class="text-danger" style="padding:1mm;" href={% url 'signup' %}>Signup</a>
                                 {% endif %}
-                                <a class="btn btn-danger" href={% url 'cc_register' %} type="button">Career Counselling<span class="caret"></span></a>
-                                {% if user.is_superuser %}
+                                <a class="btn btn-danger" href={% url 'CC_register' %} type="button">Career Counselling<span class="caret"></span></a>
+                                <!-- {% if user.is_superuser %}
                                 <br>
                                 <br>
                                 <a class="btn btn-danger" href={% url 'upload' %} type="button">Upload<span class="caret"></span></a>
                                 {%endif%}
-                                <a class="btn btn-danger" href={% url 'videos_list' %} type="button">Videos<span class="caret"></span></a>
+                                <a class="btn btn-danger" href={% url 'videos_list' %} type="button">Videos<span class="caret"></span></a> -->
                                       
                             </div>
                             <div class="main-menubar d-flex align-items-center">

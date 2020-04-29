@@ -1,0 +1,136 @@
+{% extends "navprayas/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+<section class="section-gap achivement-area">
+        <div class="container">
+
+          <div class="row ">
+
+            <div class="col-lg-11 card text-grey mx-auto  mb-3 p-0" >
+              <div class="card-header text-center " style="background-color: #DC3545;"> 
+
+                <h4 class="text-white">
+                  User Details</div>
+                </h4>
+
+              <div class="card-body">
+
+                
+                <div class="row ">
+
+                    <div class =" col-lg-5  card p-0 mx-auto">
+                      <div class="card-header   text-center " style="background-color: #DC3545;"> 
+                        <h5 class="text-white">
+                          Primary Details
+                        </h5>
+                      </div>
+                      <div class="card-body">
+                        
+
+                        {{U_form|crispy}}
+                      </div>
+                    </div>
+
+
+
+                  <div class =" col-lg-5  card p-0 mx-auto">
+                    <div class="card-header   text-center " style="background-color: #DC3545;"> 
+                      <h5 class="text-white">
+                        Profile Details
+                      </h5>
+                    </div>
+                    <div class="card-body">
+                      {{u_form|crispy}}
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+          </div>
+          </div>
+
+
+
+          <div class="row">
+
+            <div class="col-lg-5 card text-grey mx-auto p-0  mb-3 " >
+              <div class="card-header" style="background-color: #DC3545;">
+                <h4 class="text-white text-center">
+                  Education Details
+                </h4>
+                </div>
+              <div class="card-body ">
+                <div class ="rounded border p-5">
+                  {{e_form|crispy}}
+                </div>
+              </div>
+
+              <div class="card-header " style="background-color: #DC3545;">
+                <h4 class="text-white text-center">
+                  Address Details
+                </h4>
+                </div>
+              <div class="card-body ">
+                <div class ="rounded border p-5">
+                  {{a_form|crispy}}
+                </div>
+              </div>
+          </div>
+
+
+            <div class="col-lg-5 card text-grey mx-auto p-0  mb-3 " >
+              <div class="card-header " style="background-color: #DC3545;">
+                <h4 class="text-white text-center">
+                  My Applications
+                </h4>
+                </div>
+              <div class="card-body ">
+                <div >
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>S. No.</th>
+                        <th>Application for</th>
+                        <th>Your response</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for i,j in status.items %}
+                      <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{i}}</td>
+                        <td><strong> {{j|safe}}</strong></td>z
+                      </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+          </div>
+
+
+
+
+          </div>
+          
+            
+            
+
+
+           
+          </div>
+        </div>
+</section>
+
+
+
+
+{% endblock  %}
+
