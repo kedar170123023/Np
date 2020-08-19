@@ -5,31 +5,137 @@
 
 {% block content %}
 <section class="section-gap achivement-area">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-5 mx-auto rounded border p-5">
-          <div class="achivement-content">
-            <h3>Puzzle Race</h3>
-            <p><a href="/events#puzzlerace">CLick here to know more about this event.</a></p>
-              <form method="POST" id="formPR">
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }}  alert-dismissible fade show" role = "alert">
-                        {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-                  {% csrf_token %}
-                  {{form|crispy}}
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 mx-auto rounded border p-5">
+        <div class="achivement-content">
+          <h3>Puzzle Race</h3>
+          <p><a href="/events#puzzlerace">CLick here to know more about this event.</a></p>
+          <form method="POST" id="formPR">
+            {% if messages %}
+            {% for message in messages %}
 
-                <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#myModal">Submit</button>
-                </form> 
-          </div>
+            <div class="alert alert-{{ message.tags }}  alert-dismissible fade show" role="alert">
+              {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+
+            <div class="added">
+
+            </div>
+
+            <button type="button" class="btn btn-info" id="addUser">Add User</button>
+
+
         </div>
+        {{form|crispy}}
+        <br>
+        <br>
+
+        <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#myModal">Submit</button>
+        </form>
       </div>
     </div>
-  </section>
- {% endblock %}
+  </div>
+  </div>
+</section>
 
- {% block contact %}{% endblock %}
+
+<script>
+  var count = 0;
+  var auth = '<div  class="form-group"> '+
+  '<input type="password"  maxlength="50" class="textinput textInput form-control" id="pass">  </div>'
+    + '<button type="button" class="btn btn-info" id="matchpass">confirm password to add</button> <br><br>';
+
+  var elem = '<div id="user2" class="form-group append"> <label for="id_mother_name" class="">' +
+    "Enter Second Member's Email" +
+    '</label> <div class=""> <input type="text" name="user2" maxlength="50" class="textinput textInput form-control" id="getUser2"> </div> </div>'
+    + '<button type="button" class="btn btn-info" id="getUser">Get User Details</button> <br><br>';
+
+  $(document).ready(function () {
+    $("#addUser").click(function () {
+      if (count < 2) {
+        $(".added").append(elem);
+        console.log(count);
+        count++;
+        if (count == 2) {
+          $(this).hide();
+        }
+      }
+      $("#getUser").click(function () {
+
+
+    var searchText = $("#getUser2").val();
+    if (ValidateEmail(searchText)) {
+      $.ajax({
+        url: '/getUser/',
+        type: 'post',
+        data: { search: searchText,
+          'csrfmiddlewaretoken' : '{{csrf_token}}',
+        },
+        dataType: 'json',
+        success: function (response) {
+          console.log(response);
+          if(response == true){
+              $("#user2").append(auth);
+              $("#matchpass").click(function (){
+                var passwd = $("#pass").val();
+                $.ajax({
+                    url: '/matchPass/',
+                    type: 'post',
+                    data: { email : searchText,
+                      password: passwd,
+                      csrfmiddlewaretoken : '{{csrf_token}}',
+                    },
+                    dataType: 'json',
+                    success: function (response){
+                      console.log(response);
+                      
+                    }});
+                
+              });
+          }
+        }
+      });
+    }
+else alert("not a valid email");
+});
+    });
+
+
+    console.log("above");
+
+
+
+
+
+  });
+
+  function ValidateEmail(inputText) {
+    console.log("validate run");
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (inputText.match(mailformat))
+      return true;
+    return false; //else
+  }
+
+
+
+
+
+
+
+  // -------------------------------------
+
+
+
+
+
+</script>
+
+{% endblock %}
+
+{% block contact %}{% endblock %}
 {% block footer %}{% endblock %}

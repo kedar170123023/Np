@@ -6,6 +6,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
+
+
+    path('getUser/', views.getUser, name='getUser'),
+    path('matchPass/', views.matchPass, name='matchPass'),
+
     # *****************************
     # urls for home_links
     # *****************************

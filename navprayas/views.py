@@ -1,5 +1,5 @@
 from    django.shortcuts                import render, redirect
-from    django.http                     import HttpResponse
+from    django.http                     import HttpResponse, JsonResponse
 from    django.contrib.auth.decorators  import login_required
 from    django.contrib.auth.models      import User
 from    django.contrib.auth             import login                as auth_login   #as it clashes with other login term
@@ -16,6 +16,8 @@ from    django.conf                     import settings
 from    django.core.files.storage       import FileSystemStorage
 from    .models                         import *
 from    .dictUtils                      import ADFP as MAP
+from    django.contrib.auth             import authenticate
+from    django.forms.models             import model_to_dict
 import  json
 import  string
 import  random
@@ -27,11 +29,39 @@ TRN_DIGITS = 10
 def OID(size=TRN_DIGITS, chars=string.digits):
     return get_random_string(TRN_DIGITS, chars)
 
-
+def matchPass(request) :
+    if request.is_ajax() and request.method == 'POST':
+        print(request.POST)
+        
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(username = email,password=password)
+        print(user)
+        if(user is None):
+            return HttpResponse("false")
+        else :
+            profile = user.profile
+            data = {
+                'user' : model_to_dict(user),
+                'profile' : model_to_dict(profile),
+            }
+            return JsonResponse(data)  
 
 
 
 # Create your views here.
+def getUser(request):
+
+    if request.is_ajax() and request.method == 'POST':
+        searchText = request.POST['search']
+
+        if User.objects.filter(email = searchText).exists():
+            return HttpResponse("true")
+        else :
+            return HttpResponse("false")
+
+
+
 def index(request):
     return render(request, 'navprayas/home_links/index.html', {})
 

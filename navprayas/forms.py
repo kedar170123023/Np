@@ -109,8 +109,12 @@ class RANGOTSAV_form(forms.ModelForm):
 class PR_form(forms.ModelForm):
     class Meta:
         model = PR
+        widgets = {'user2WithDetails': forms.HiddenInput(),
+                    'user3WithDetails': forms.HiddenInput(),
+                    'userInput' : forms.HiddenInput(),
+                }
         fields = '__all__'
-        exclude = ('user', 'success', 'userInput')
+        exclude = ('user', 'success', )
 
 
 
